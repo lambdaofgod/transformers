@@ -477,8 +477,12 @@ class FeatureExtractionPipeline(Pipeline):
         )
 
     def __call__(self, *args, **kwargs):
-        return super().__call__(*args, **kwargs).tolist()
-
+        results = super().__call__(*args, **kwargs)
+        convert_to_list = kwargs.get('convert_to_list', False)
+        if convert_to_list:
+            return results.tolist()
+        else:
+            return results
 
 class TextClassificationPipeline(Pipeline):
     """
